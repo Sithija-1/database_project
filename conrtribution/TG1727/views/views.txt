@@ -1,5 +1,6 @@
 				                    -- Cgpa Check every sem
 
+-- Cgpa Check every sem
 CREATE OR REPLACE VIEW v_progressive_cgpa AS
 SELECT
     r.student_id,
@@ -14,7 +15,7 @@ SELECT
             WHERE m.student_id = r.student_id
               AND c.academic_year = r.academic_year
               AND c.semester = r.semester
-              AND m.grade = 'MC'
+              AND m.grade IN ('MC','WH')
         ) THEN 'WH'
         ELSE CAST(r.sgpa AS CHAR)
     END AS sgpa,
@@ -26,7 +27,7 @@ SELECT
             WHERE m.student_id = r.student_id
               AND c.academic_year = r.academic_year
               AND c.semester = r.semester
-              AND m.grade = 'MC'
+              AND m.grade IN ('MC','WH')
         ) THEN 'WH'
         ELSE CAST(
             ROUND((
@@ -77,9 +78,9 @@ LEFT JOIN department d
 ORDER BY s.batch, d.name, s.reg_no, c.academic_year, c.semester;
 
 
-							v_student_overall_eligibility
 
-						-- 1) Student-level overall eligibility (reg_no comes from student)
+							v_student_overall_eligibility
+-- 1) Student-level overall eligibility (reg_no comes from student)
 CREATE OR REPLACE VIEW student_overall_eligibility AS
 SELECT 
     m.student_id,
