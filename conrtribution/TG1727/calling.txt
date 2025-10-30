@@ -1,0 +1,11 @@
+select * from tech_officer ;
+select * from dean ;
+select * from course ;
+
+CALL get_progressive_cgpa('U013');
+CALL get_batch_department_marks('2023');
+CALL get_student_overall_eligibility();
+
+select * from v_progressive_cgpa ;
+select * from batch_department_marks ;
+select * from student_overall_eligibility ;
