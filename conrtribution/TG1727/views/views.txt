@@ -93,8 +93,8 @@ SELECT
     c.semester,
 
     -- From attendance summary (may be NULL if no summary)
-    COALESCE(sas.attendance_percentage, 0)        AS attendance_percentage,
-    COALESCE(sas.eligibility, 'Unknown')         AS attendance_eligibility,
+    COALESCE(sas.attendance_percentage, 0) AS attendance_percentage,
+    COALESCE(sas.eligibility, 'Unknown') AS attendance_eligibility,
 
     -- From marks table
     m.ca_marks,
