@@ -3474,7 +3474,7 @@ SELECT
     m.grade,
     CASE 
         WHEN m.grade IN ('MC','WH') THEN 'WH'         -- Withheld due to Medical
-        WHEN m.grade IN ('E', 'ECA & ESA','ECA','ESA') THEN 'Fail'
+        WHEN m.grade IN ('E', 'ECA & ESA','ECA','ESA','E*') THEN 'Fail'
         ELSE 'Pass'
     END AS status
 FROM marks m
@@ -3595,7 +3595,7 @@ GROUP BY soe.course_id, c.name, c.academic_year, c.semester;
 
 
 
-- Procedure: generate_student_academic_report
+--  Procedure: generate_student_academic_report
 
 DELIMITER $$
 
@@ -3680,6 +3680,7 @@ BEGIN
 END $$
 
 DELIMITER ;
+CALL get_student_course_marks('U013', 'ICT1222');
 
 
 
@@ -3703,7 +3704,7 @@ END $$
 
 
 DELIMITER ;
-
+CALL get_student_eligibility('U013', 'ICT1222');
 
 ----  one course check final marks and eligibility  CALL get_batch_marks_summary_by_course(''Database Management Systems'');
 DELIMITER $$
@@ -3730,7 +3731,8 @@ BEGIN
     WHERE c.name = p_course_name
     GROUP BY c.course_id, c.academic_year, c.semester;
 END $$
-
+DELIMITER ;
+CALL get_batch_marks_summary_by_course('Database Management Systems');
 
 
 
@@ -3817,7 +3819,7 @@ BEGIN
         m.grade,
         CASE 
             WHEN m.grade = 'MC' THEN 'WH'
-            WHEN m.grade IN ('E', 'ECA & ESA','ECA','ESA') THEN 'Fail'
+            WHEN m.grade IN ('E', 'ECA & ESA','ECA','ESA','E*') THEN 'Fail'
             ELSE 'Pass'
         END AS status
     FROM marks m
